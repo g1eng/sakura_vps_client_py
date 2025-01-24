@@ -7,6 +7,7 @@ put_readme:
 
 modify_gitignore:
 	echo /.idea >> .gitignore
+	echo .\*.swp >> .gitignore
 	
 
 generate_models: spec/spec.json
