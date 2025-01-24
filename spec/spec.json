@@ -1,0 +1,5025 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "4.3.0",
+    "title": "さくらのVPS APIドキュメント",
+    "x-logo": {
+      "url": "logo.svg",
+      "altText": "さくらのVPS APIドキュメント"
+    },
+    "description": "Sakura VPS API client written in Python (generated with openapi-generator)"
+  },
+  "servers": [
+    {
+      "url": "https://secure.sakura.ad.jp/vps/api/v7"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/servers": {
+      "get": {
+        "summary": "サーバー情報一覧を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/IDList"
+          },
+          {
+            "$ref": "#/components/parameters/SwitchID"
+          },
+          {
+            "$ref": "#/components/parameters/ZoneCode"
+          },
+          {
+            "$ref": "#/components/parameters/ServiceType"
+          },
+          {
+            "$ref": "#/components/parameters/Ipv4Address"
+          },
+          {
+            "$ref": "#/components/parameters/MonitoringResourceId"
+          },
+          {
+            "$ref": "#/components/parameters/ServerSortOrder"
+          },
+          {
+            "$ref": "#/components/parameters/ServerSearch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Server"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/servers/{server_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "サーバー情報を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Server"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "サーバー情報を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "description"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "名前",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "説明",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Server"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/power-status": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "サーバーの電源状態を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-power-status",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerPowerStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストから電源状態が取得できない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/power-on": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "post": {
+        "summary": "サーバーを起動する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "post-server-power-on",
+        "responses": {
+          "202": {
+            "description": "サーバー起動コマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "電源操作が行えない状態（スケールアップ中など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストが電源操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/shutdown": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "post": {
+        "summary": "サーバーをシャットダウンする",
+        "tags": [
+          "server"
+        ],
+        "operationId": "post-server-shutdown",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "force": {
+                    "type": "boolean",
+                    "description": "強制停止を行うか",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "シャットダウンコマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "電源操作が行えない状態（スケールアップ中など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストが電源操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/force-reboot": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "post": {
+        "summary": "サーバーを強制再起動する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "post-server-force-reboot",
+        "responses": {
+          "202": {
+            "description": "強制再起動コマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "電源操作が行えない状態（スケールアップ中など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストが電源操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/mount-disc": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "post": {
+        "summary": "サーバーにディスクをマウントする",
+        "tags": [
+          "server"
+        ],
+        "operationId": "post-server-mount-disc",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "disc_id"
+                ],
+                "properties": {
+                  "disc_id": {
+                    "type": "integer",
+                    "description": "ディスクID"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "マウント完了"
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ディスク操作が行えない状態（電源がOFFなど）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストがディスク操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/vnc-console-keymap": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "コンパネのVNCコンソールのキーマップ情報を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-vnc-console-keymap",
+        "responses": {
+          "200": {
+            "description": "取得完了",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Keymap"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "コンパネのVNCコンソールのキーマップ情報を変更する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-vnc-console-keymap",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Keymap"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功。サーバーの再起動をすることで設定が反映される",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Keymap"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ホストがキーマップ操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/ipv4-ptr": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "put": {
+        "summary": "サーバーのipv4の逆引きホスト名を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-ipv4-ptr",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "hostname"
+                ],
+                "properties": {
+                  "hostname": {
+                    "type": "string",
+                    "description": "ホスト名",
+                    "example": "example.jp"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "設定完了",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ptr"
+                  ],
+                  "properties": {
+                    "ptr": {
+                      "type": "string",
+                      "description": "逆引きホスト名",
+                      "example": "example.jp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "DNSの情報取得または設定に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/interfaces": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "サーバーのインターフェース情報一覧を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-interface-list",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ServerInterface"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/interfaces/{interface_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        },
+        {
+          "$ref": "#/components/parameters/ServerInterfaceID"
+        }
+      ],
+      "get": {
+        "summary": "サーバーのインターフェース情報を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-interface",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerInterface"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "インターフェースが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "サーバーのインターフェース情報を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-interface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerInterface"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerInterface"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "インターフェースが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "接続が行えない状態",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "一時的に接続操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/ipv6-ptr": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "put": {
+        "summary": "サーバーのipv6の逆引きホスト名を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-ipv6-ptr",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "hostname"
+                ],
+                "properties": {
+                  "hostname": {
+                    "type": "string",
+                    "description": "ホスト名",
+                    "example": "example.jp"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "設定完了",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "ptr"
+                  ],
+                  "properties": {
+                    "ptr": {
+                      "type": "string",
+                      "description": "逆引きホスト名",
+                      "example": "example.jp"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "DNSの情報取得または設定に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/video-device": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "サーバーのビデオデバイスの設定を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-video-device",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "ビデオデバイスの種類",
+                      "enum": [
+                        "vga",
+                        "cirrus",
+                        "unknown"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ビデオデバイス情報の取得に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "サーバーのビデオデバイスの設定を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-video-device",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "type"
+                ],
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "description": "ビデオデバイスの種類",
+                    "enum": [
+                      "vga",
+                      "cirrus"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功。サーバーの再起動をすることで設定が反映される",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "type"
+                  ],
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "description": "ビデオデバイスの種類",
+                      "enum": [
+                        "vga",
+                        "cirrus"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ビデオデバイス情報の設定に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/limitation": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ServerID"
+        }
+      ],
+      "get": {
+        "summary": "サーバーの制限情報を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-limitation",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Limitation"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "サーバーの制限情報の取得に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/monitorings": {
+      "get": {
+        "summary": "サーバーのサーバー監視情報一覧を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-monitoring-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/ServerID"
+          },
+          {
+            "$ref": "#/components/parameters/MonitoringResourceId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ServerMonitoring"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "post": {
+        "summary": "サーバーのサーバー監視を作成する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "post-server-monitoring",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ServerID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerMonitoring"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerMonitoring"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "サーバー監視を作成できない状態（作成上限数超過など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/monitorings/{server_monitoring_id}": {
+      "get": {
+        "summary": "サーバーのサーバー監視情報を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-monitoring",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/ServerID"
+          },
+          {
+            "$ref": "#/components/parameters/ServerMonitoringID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerMonitoring"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーまたはサーバー監視が見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "サーバーのサーバー監視情報を更新する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "put-server-monitoring",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ServerID"
+          },
+          {
+            "$ref": "#/components/parameters/ServerMonitoringID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServerMonitoring"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerMonitoring"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "サーバー監視を更新できない状態（更新ステータスが更新完了でないなど）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "delete": {
+        "summary": "サーバーのサーバー監視情報を削除する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "delete-server-monitorings",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ServerID"
+          },
+          {
+            "$ref": "#/components/parameters/ServerMonitoringID"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーまたはサーバー監視が見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "サーバー監視を削除できない状態（更新ステータスが更新完了でないなど）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/servers/{server_id}/monitorings/{server_monitoring_id}/health": {
+      "get": {
+        "summary": "サーバー監視の監視状態を取得する",
+        "tags": [
+          "server"
+        ],
+        "operationId": "get-server-monitoring-health",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ServerID"
+          },
+          {
+            "$ref": "#/components/parameters/ServerMonitoringID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerMonitoringHealth"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーまたはサーバー監視が見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "監視状態を取得できない状態（更新ステータスが更新完了でないなど）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/nfs-servers": {
+      "get": {
+        "summary": "NFS情報一覧を取得する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "get-nfs-server-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/IDList"
+          },
+          {
+            "$ref": "#/components/parameters/SwitchID"
+          },
+          {
+            "$ref": "#/components/parameters/ZoneCode"
+          },
+          {
+            "$ref": "#/components/parameters/NfsServerSortOrder"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/NfsServer"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "get": {
+        "summary": "NFS情報を取得する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "get-nfs-server",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsServer"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "NFS情報を更新する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "put-nfs-server",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "description"
+                ],
+                "properties": {
+                  "name": {
+                    "description": "名前",
+                    "type": "string"
+                  },
+                  "description": {
+                    "description": "説明",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsServer"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/change-ipv4": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "post": {
+        "summary": "NFSのipv4を更新する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "post-nfs-server-change-ipv4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "address",
+                  "netmask"
+                ],
+                "properties": {
+                  "address": {
+                    "description": "ipv4アドレス",
+                    "type": "string"
+                  },
+                  "netmask": {
+                    "description": "ネットマスク",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "ipv4の設定のリクエストの送信を完了"
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ipv4の設定が行えない状態にある（すでにipv4の設定中である場合やNFSが起動されていない場合など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "ipv4の設定のリクエストの送信に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/power-status": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "get": {
+        "summary": "NFSの電源状態を取得する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "get-nfs-server-power-status",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsServerPowerStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "サーバーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "電源状態が取得できない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/interface": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "get": {
+        "summary": "NFSのインターフェースを取得する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "get-nfs-server-interface",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsServerInterface"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "NFSのインターフェース情報を更新する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "put-nfs-server-interface",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NfsServerInterface"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsServerInterface"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "接続が行えない状態（電源がオフになっていない）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "一時的に接続操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/switches": {
+      "post": {
+        "summary": "スイッチを作成する",
+        "description": "同一ゾーン内で作成可能なスイッチ数は最大20です",
+        "tags": [
+          "switch"
+        ],
+        "operationId": "post-switch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "description",
+                  "zone_code"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "名前"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "説明"
+                  },
+                  "zone_code": {
+                    "type": "string",
+                    "writeOnly": true,
+                    "description": "ゾーンコード\n* tk2 東京第2\n* tk3 東京第3\n* os3 大阪第3\n* is1 石狩第1",
+                    "enum": [
+                      "tk2",
+                      "tk3",
+                      "os3",
+                      "is1"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "作成完了",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "id",
+                    "name",
+                    "description",
+                    "switch_code",
+                    "zone",
+                    "server_interfaces",
+                    "nfs_server_interfaces",
+                    "external_connection"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "readOnly": true,
+                      "description": "id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "名前"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "説明"
+                    },
+                    "switch_code": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "スイッチコード"
+                    },
+                    "zone": {
+                      "type": "object",
+                      "readOnly": true,
+                      "description": "ゾーン情報",
+                      "required": [
+                        "code",
+                        "name"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "readOnly": true,
+                          "description": "ゾーンコード\n* tk2 東京第2\n* tk3 東京第3\n* os3 大阪第3\n* is1 石狩第1",
+                          "enum": [
+                            "tk2",
+                            "tk3",
+                            "os3",
+                            "is1"
+                          ]
+                        },
+                        "name": {
+                          "type": "string",
+                          "readOnly": true,
+                          "description": "ゾーン名称",
+                          "example": "石狩第1"
+                        }
+                      }
+                    },
+                    "server_interfaces": {
+                      "type": "array",
+                      "readOnly": true,
+                      "description": "接続されているサーバーのインターフェースid",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": []
+                    },
+                    "nfs_server_interfaces": {
+                      "type": "array",
+                      "readOnly": true,
+                      "description": "接続されている追加ストレージ（NFS）のインターフェースid",
+                      "items": {
+                        "type": "integer"
+                      },
+                      "example": []
+                    },
+                    "external_connection": {
+                      "type": "object",
+                      "readOnly": true,
+                      "nullable": true,
+                      "description": "接続されている外部接続の情報",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "409": {
+            "description": "作成上限に達している",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "get": {
+        "summary": "スイッチ情報一覧を取得する",
+        "tags": [
+          "switch"
+        ],
+        "operationId": "get-switch-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/IDList"
+          },
+          {
+            "$ref": "#/components/parameters/ZoneCode"
+          },
+          {
+            "$ref": "#/components/parameters/InterfaceID"
+          },
+          {
+            "$ref": "#/components/parameters/SwitchSortOrder"
+          },
+          {
+            "$ref": "#/components/parameters/SwitchSearch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Switch"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/switches/{switch_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/SwitchIDPath"
+        }
+      ],
+      "get": {
+        "summary": "スイッチ情報を取得する",
+        "tags": [
+          "switch"
+        ],
+        "operationId": "get-switch",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Switch"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "スイッチが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "スイッチ情報を更新する",
+        "tags": [
+          "switch"
+        ],
+        "operationId": "put-switch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Switch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Switch"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "スイッチが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "delete": {
+        "summary": "スイッチを削除する",
+        "tags": [
+          "switch"
+        ],
+        "operationId": "delete-switch",
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "スイッチが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "削除が行えない状態（接続が残っている）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/discs": {
+      "get": {
+        "summary": "ディスク情報一覧を取得する",
+        "description": "追加ソフトウェアのディスク情報です。WindowsのCDドライブにマウントして利用します。",
+        "tags": [
+          "disc"
+        ],
+        "operationId": "get-disc-list",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Disc"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/zones": {
+      "get": {
+        "summary": "ゾーン情報一覧を取得する",
+        "tags": [
+          "zone"
+        ],
+        "operationId": "get-zone-list",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Zone"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/api-keys": {
+      "post": {
+        "summary": "APIキーを作成する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "post-api-key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKey"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKey"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "409": {
+            "description": "APIキーを作成できない状態。上限を超えているなど。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "get": {
+        "summary": "APIキーの一覧を取得する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "get-api-key-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ApiKeySortOrder"
+          },
+          {
+            "$ref": "#/components/parameters/RoleID"
+          },
+          {
+            "$ref": "#/components/parameters/ApiKeySearch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ApiKey"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/api-keys/{api_key_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ApiKeyID"
+        }
+      ],
+      "get": {
+        "summary": "APIキーを取得する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "get-api-key",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKey"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "APIキーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "APIキーを更新する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "put-api-key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApiKey"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKey"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "APIキーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "delete": {
+        "summary": "APIキーを削除する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "delete-api-key",
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "APIキーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/api-keys/{api_key_id}/rotate": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ApiKeyID"
+        }
+      ],
+      "post": {
+        "summary": "APIキーのトークンのローテーションを行う",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "post-api-key-rotate",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiKey"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "APIキーが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "post": {
+        "summary": "ロールを作成する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "post-role",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "409": {
+            "description": "ロールを作成できない状態。上限を超えているなど。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "get": {
+        "summary": "ロール一覧を取得する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "get-role-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/RoleSortOrder"
+          },
+          {
+            "$ref": "#/components/parameters/RoleSearch"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Role"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/roles/{role_id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/RoleIDPath"
+        }
+      ],
+      "get": {
+        "summary": "ロールを取得する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "get-role",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "ロールが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "put": {
+        "summary": "ロールを更新する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "put-role",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Role"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/Generic400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "ロールが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      },
+      "delete": {
+        "summary": "ロールを削除する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "delete-role",
+        "responses": {
+          "204": {
+            "description": "成功"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "ロールが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ロールを削除できない状態。紐づいているAPIキーがあるなど。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    },
+    "/permissions": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Category"
+        },
+        {
+          "$ref": "#/components/parameters/Code"
+        }
+      ],
+      "get": {
+        "summary": "権限の一覧を取得する",
+        "tags": [
+          "api-key"
+        ],
+        "operationId": "get-permission-list",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "type": "object",
+                      "required": [
+                        "results"
+                      ],
+                      "properties": {
+                        "results": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Permission"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/Pagination"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "コンパネで発行したApiKey"
+      }
+    },
+    "parameters": {
+      "PaginationPage": {
+        "in": "query",
+        "name": "page",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "PaginationPerPage": {
+        "in": "query",
+        "name": "per_page",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        }
+      },
+      "ServerID": {
+        "in": "path",
+        "name": "server_id",
+        "description": "サーバーID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ServerInterfaceID": {
+        "in": "path",
+        "name": "interface_id",
+        "description": "サーバーインターフェースID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ServerMonitoringID": {
+        "in": "path",
+        "name": "server_monitoring_id",
+        "description": "サーバー監視ID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "NfsServerID": {
+        "in": "path",
+        "name": "nfs_server_id",
+        "description": "NFSのID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "SwitchIDPath": {
+        "in": "path",
+        "name": "switch_id",
+        "description": "スイッチID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "SwitchID": {
+        "in": "query",
+        "name": "switch",
+        "description": "switchのid\n対象のスイッチに接続されているサーバーに絞り込む",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "InterfaceID": {
+        "in": "query",
+        "name": "interface",
+        "description": "interfaceのid\n対象のインターフェースに接続されているスイッチに絞り込む",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ZoneCode": {
+        "in": "query",
+        "name": "zone_code",
+        "description": "ゾーンコードで絞り込む\n* tk1 東京第1\n* tk2 東京第2\n* tk3 東京第3\n* os1 大阪第1\n* os2 大阪第2\n* os3 大阪第3\n* is1 石狩第1",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "tk1",
+            "tk2",
+            "tk3",
+            "os1",
+            "os2",
+            "os3",
+            "is1"
+          ]
+        }
+      },
+      "ServiceType": {
+        "in": "query",
+        "name": "service_type",
+        "description": "サービスタイプで絞り込む",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "linux",
+            "windows"
+          ]
+        }
+      },
+      "Ipv4Address": {
+        "in": "query",
+        "name": "ipv4_address",
+        "description": "IPアドレスで絞り込む",
+        "schema": {
+          "type": "string",
+          "example": "192.0.2.0"
+        }
+      },
+      "ServerSearch": {
+        "in": "query",
+        "name": "search",
+        "description": "名前、説明文、ホスト名、ipv4アドレス、ipv6アドレス、サービスコードから部分一致検索",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "MonitoringResourceId": {
+        "in": "query",
+        "name": "monitoring_resource_id",
+        "description": "サーバー監視リソースIDで絞り込む",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "IDList": {
+        "in": "query",
+        "name": "id",
+        "description": "idで絞り込む。カンマ区切りで100件まで指定可能。",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "ServerSortOrder": {
+        "in": "query",
+        "name": "sort",
+        "description": "データの並び順。項目名の頭に`-`をつけると降順で取得する  \n例:\n* サービスコード昇順: sort=service_code\n* サービスコード降順: sort=-service_code",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "service_code",
+            "-service_code",
+            "name",
+            "-name",
+            "storage_size_gibibytes",
+            "-storage_size_gibibytes",
+            "memory_mebibytes",
+            "-memory_mebibytes",
+            "cpu_cores",
+            "-cpu_cores",
+            "hostname",
+            "-hostname",
+            "ipv6_hostname",
+            "-ipv6_hostname",
+            "ipv4_address",
+            "-ipv4_address",
+            "ipv6_address",
+            "-ipv6_address",
+            "zone_code",
+            "-zone_code",
+            "ipv4_ptr",
+            "-ipv4_ptr",
+            "ipv6_ptr",
+            "-ipv6_ptr"
+          ]
+        }
+      },
+      "NfsServerSortOrder": {
+        "in": "query",
+        "name": "sort",
+        "description": "データの並び順。項目名の頭に`-`をつけると降順で取得する  \n例:\n* サービスコード昇順: sort=service_code\n* サービスコード降順: sort=-service_code",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "service_code",
+            "-service_code",
+            "name",
+            "-name",
+            "storage_size_gibibytes",
+            "-storage_size_gibibytes",
+            "ipv4_address",
+            "-ipv4_address",
+            "zone_code",
+            "-zone_code"
+          ]
+        }
+      },
+      "SwitchSortOrder": {
+        "in": "query",
+        "name": "sort",
+        "description": "データの並び順。項目名の頭に`-`をつけると降順で取得する  \n例:\n* 接続インターフェース数昇順: sort=interfaces_count\n* 接続インターフェース数降順: sort=-interfaces_count",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "name",
+            "-name",
+            "zone",
+            "-zone",
+            "interfaces_count",
+            "-interfaces_count"
+          ]
+        }
+      },
+      "SwitchSearch": {
+        "in": "query",
+        "name": "search",
+        "description": "名前と説明文から部分一致検索",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "DiscID": {
+        "in": "path",
+        "name": "disc_id",
+        "description": "ディスクID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "RoleIDPath": {
+        "in": "path",
+        "name": "role_id",
+        "description": "ロールID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "RoleID": {
+        "in": "query",
+        "name": "role",
+        "description": "roleのid。ロールで絞り込む",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "RoleSortOrder": {
+        "in": "query",
+        "name": "order",
+        "description": "データの並び順。項目名の頭に`-`をつけると降順で取得する  \n例:\n* 名称昇順: sort=name\n* 名称降順: sort=-name",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "id",
+            "-id",
+            "name",
+            "-name"
+          ]
+        }
+      },
+      "RoleSearch": {
+        "in": "query",
+        "name": "search",
+        "description": "名前と説明文から部分一致検索",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "ApiKeyID": {
+        "in": "path",
+        "name": "api_key_id",
+        "description": "APIキーID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ApiKeySortOrder": {
+        "in": "query",
+        "name": "order",
+        "description": "データの並び順。項目名の頭に`-`をつけると降順で取得する  \n例:\n* 名称昇順: sort=name\n* 名称降順: sort=-name",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "id",
+            "-id",
+            "name",
+            "-name"
+          ]
+        }
+      },
+      "ApiKeySearch": {
+        "in": "query",
+        "name": "search",
+        "description": "名前から部分一致検索",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Category": {
+        "in": "query",
+        "name": "category",
+        "description": "カテゴリーで絞り込む",
+        "schema": {
+          "type": "string"
+        },
+        "example": "server"
+      },
+      "Code": {
+        "in": "query",
+        "name": "code",
+        "description": "コードで絞り込む。カンマ区切りで複数指定可能。",
+        "schema": {
+          "type": "string"
+        },
+        "example": "get-server-list,get-server,put-server"
+      }
+    },
+    "schemas": {
+      "Pagination": {
+        "type": "object",
+        "required": [
+          "count",
+          "next",
+          "previous"
+        ],
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "データ総数",
+            "example": 100
+          },
+          "next": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "次のページへのURL",
+            "example": "https://api.example.com/?page=3&per_page=10"
+          },
+          "previous": {
+            "type": "string",
+            "format": "uri",
+            "nullable": true,
+            "description": "前のページへのURL",
+            "example": "https://api.example.com/?per_page=10"
+          }
+        }
+      },
+      "InvalidParameterDetail": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "エラー内容を示す簡潔な識別子",
+              "example": "required"
+            },
+            "message": {
+              "type": "string",
+              "example": "この項目は必須です"
+            }
+          }
+        }
+      },
+      "ProblemDetails400": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "invalid",
+              "parse_error",
+              "bad_request"
+            ],
+            "description": "エラー内容を示す簡潔な識別子\n* `invalid` - 不正なリクエスト値,リクエスト値が妥当でない\n* `parse_error` - 不正な形式,リクエスト値を読み取ることができない\n* `bad_request` - リクエストの内容に何らかの問題がある"
+          },
+          "message": {
+            "type": "string",
+            "description": "エラーの内容",
+            "example": "Invalid input."
+          },
+          "errors": {
+            "description": "入力値に対するエラーを構造化した情報\n(code`invalid`の場合のみ)\n* `non_field_errors` - リクエスト全体に起因した(単一項目でない)エラー内容\n* `*` - 対応した入力項目ごとのエラー内容",
+            "nullable": true,
+            "example": {
+              "foo": [
+                {
+                  "code": "required",
+                  "message": "この項目は必須です"
+                }
+              ]
+            },
+            "type": "object",
+            "properties": {
+              "non_field_errors": {
+                "$ref": "#/components/schemas/InvalidParameterDetail"
+              }
+            },
+            "additionalProperties": {
+              "$ref": "#/components/schemas/InvalidParameterDetail"
+            }
+          }
+        }
+      },
+      "ProblemDetails404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "not_found"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "エラーの内容",
+            "example": "見つかりませんでした。"
+          }
+        }
+      },
+      "ProblemDetails409": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "conflict"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "エラーの内容",
+            "example": "状態の競合によりリクエストを処理できません。"
+          }
+        }
+      },
+      "ProblemDetails429": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "throttled"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "エラーの内容",
+            "example": "リクエストの処理は絞られました。 Expected available in xxxxxxx."
+          }
+        }
+      },
+      "ProblemDetails503": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "temporary_unavailable"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "description": "エラーの内容",
+            "example": "一時的にご利用になれません。"
+          }
+        }
+      },
+      "Limitation": {
+        "type": "object",
+        "properties": {
+          "cpu_performance_limit": {
+            "description": "CPUリソースの制限可否",
+            "type": "string",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "network_bandwidth_limit": {
+            "description": "ネットワーク帯域の制限可否",
+            "type": "string",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "outbound_port_25_blocking": {
+            "description": "OP25Bの可否",
+            "type": "string",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "storage_iops_limit": {
+            "description": "ストレージのIOPSの制限可否",
+            "type": "string",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          }
+        }
+      },
+      "Server": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "service_type",
+          "service_status",
+          "cpu_cores",
+          "memory_mebibytes",
+          "storage",
+          "zone",
+          "options",
+          "version",
+          "ipv4",
+          "ipv6",
+          "contract",
+          "power_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "name": {
+            "description": "名前",
+            "type": "string"
+          },
+          "description": {
+            "description": "説明",
+            "type": "string"
+          },
+          "service_type": {
+            "description": "サービスタイプ",
+            "type": "string",
+            "enum": [
+              "linux",
+              "windows"
+            ]
+          },
+          "service_status": {
+            "description": "サービス状況\n* on_trial お試し中\n* link_down_on_trial お試し中（一時停止）\n* in_use 利用中\n* link_down 一時停止中",
+            "type": "string",
+            "enum": [
+              "on_trial",
+              "link_down_on_trial",
+              "in_use",
+              "link_down"
+            ]
+          },
+          "cpu_cores": {
+            "description": "CPUコア数",
+            "type": "integer",
+            "example": 2
+          },
+          "memory_mebibytes": {
+            "description": "メモリ容量(MiB)",
+            "type": "integer",
+            "example": 1024
+          },
+          "storage": {
+            "description": "ストレージ情報",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "port",
+                "type",
+                "size_gibibytes"
+              ],
+              "properties": {
+                "port": {
+                  "type": "integer",
+                  "description": "ポート番号",
+                  "example": 0
+                },
+                "type": {
+                  "type": "string",
+                  "description": "種別",
+                  "enum": [
+                    "ssd",
+                    "hdd"
+                  ]
+                },
+                "size_gibibytes": {
+                  "type": "integer",
+                  "description": "ストレージ容量(GiB)",
+                  "example": 100
+                }
+              }
+            }
+          },
+          "zone": {
+            "description": "ゾーン情報",
+            "type": "object",
+            "required": [
+              "code",
+              "name"
+            ],
+            "properties": {
+              "code": {
+                "description": "ゾーンコード\n* tk1 東京第1\n* tk2 東京第2\n* tk3 東京第3\n* os1 大阪第1\n* os2 大阪第2\n* os3 大阪第3\n* is1 石狩第1",
+                "enum": [
+                  "tk1",
+                  "tk2",
+                  "tk3",
+                  "os1",
+                  "os2",
+                  "os3",
+                  "is1"
+                ],
+                "type": "string"
+              },
+              "name": {
+                "description": "ゾーン名称",
+                "type": "string",
+                "example": "石狩第1"
+              }
+            }
+          },
+          "options": {
+            "type": "array",
+            "description": "オプション（追加ソフトウェア）",
+            "items": {
+              "type": "string",
+              "example": "SQL Server Web Edition"
+            }
+          },
+          "version": {
+            "type": "string",
+            "description": "プランの世代",
+            "example": "v5"
+          },
+          "ipv4": {
+            "type": "object",
+            "required": [
+              "address",
+              "netmask",
+              "gateway",
+              "nameservers",
+              "hostname",
+              "ptr"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "アドレス",
+                "example": "198.51.100.2"
+              },
+              "netmask": {
+                "type": "string",
+                "description": "サブネットマスク",
+                "example": "255.255.254.0"
+              },
+              "gateway": {
+                "type": "string",
+                "description": "ゲートウェイのアドレス",
+                "example": "198.51.100.1"
+              },
+              "nameservers": {
+                "type": "array",
+                "description": "ネームサーバーのアドレスリスト",
+                "items": {
+                  "type": "string",
+                  "example": "203.0.113.1"
+                }
+              },
+              "hostname": {
+                "type": "string",
+                "description": "標準ホスト名",
+                "example": "example.jp"
+              },
+              "ptr": {
+                "type": "string",
+                "description": "逆引きホスト名",
+                "example": "example.jp"
+              }
+            }
+          },
+          "ipv6": {
+            "type": "object",
+            "required": [
+              "address",
+              "prefixlen",
+              "gateway",
+              "nameservers",
+              "hostname",
+              "ptr"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "nullable": true,
+                "description": "アドレス",
+                "example": "2001:e42:102:1501:153:121:89:107"
+              },
+              "prefixlen": {
+                "type": "integer",
+                "description": "プレフィックス長",
+                "example": 64,
+                "nullable": true
+              },
+              "gateway": {
+                "type": "string",
+                "nullable": true,
+                "description": "ゲートウェイのアドレス",
+                "example": "fe80::1"
+              },
+              "nameservers": {
+                "type": "array",
+                "description": "ネームサーバーのアドレスリスト",
+                "items": {
+                  "type": "string",
+                  "example": "2001:e42::1"
+                }
+              },
+              "hostname": {
+                "type": "string",
+                "nullable": true,
+                "description": "標準ホスト名",
+                "example": "example.jp"
+              },
+              "ptr": {
+                "type": "string",
+                "nullable": true,
+                "description": "逆引きホスト名",
+                "example": "example.jp"
+              }
+            }
+          },
+          "contract": {
+            "type": "object",
+            "description": "契約情報",
+            "required": [
+              "plan_code",
+              "plan_name",
+              "service_code"
+            ],
+            "properties": {
+              "plan_code": {
+                "type": "integer",
+                "description": "プランコード",
+                "example": 3439
+              },
+              "plan_name": {
+                "type": "string",
+                "description": "プラン名",
+                "example": "さくらのVPS(v5)  1G IK01"
+              },
+              "service_code": {
+                "description": "サービスコード",
+                "type": "string",
+                "example": "100000000000"
+              }
+            }
+          },
+          "power_status": {
+            "type": "string",
+            "description": "電源ステータス\n* power_on 電源ON\n* in_shutdown シャットダウン中\n* power_off 電源OFF\n* installing OSインストール中\n* in_scaleup スケールアップ中\n* migration サーバー移行作業中\n* unknown 不明（電源状態を取得できない）\nこのエンドポイントが返す電源ステータスはキャッシュされた情報のため、最新の正確な電源ステータスが必要な場合は\n**サーバーの電源状態を取得する**`/servers/{server_id}/power-status`をご利用ください",
+            "enum": [
+              "power_on",
+              "in_shutdown",
+              "power_off",
+              "installing",
+              "in_scaleup",
+              "migration",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "ServerPowerStatus": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "電源ステータス\n* power_on 電源ON\n* in_shutdown シャットダウン中\n* power_off 電源OFF\n* installing OSインストール中\n* in_scaleup スケールアップ中\n* migration サーバー移行作業中\n* unknown 不明（電源状態を取得できない）",
+            "enum": [
+              "power_on",
+              "in_shutdown",
+              "power_off",
+              "installing",
+              "in_scaleup",
+              "migration",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "ServerInterface": {
+        "type": "object",
+        "required": [
+          "id",
+          "device",
+          "connectable_to_global_network",
+          "connect_to",
+          "mac",
+          "switch_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id",
+            "readOnly": true
+          },
+          "device": {
+            "type": "string",
+            "description": "NIC名称",
+            "example": "eth0",
+            "readOnly": true
+          },
+          "connectable_to_global_network": {
+            "type": "boolean",
+            "description": "グローバルネットワークと接続可能か",
+            "example": true,
+            "readOnly": true
+          },
+          "connect_to": {
+            "type": "string",
+            "description": "インターフェースの接続先",
+            "example": "global",
+            "enum": [
+              "switch",
+              "global"
+            ],
+            "readOnly": true,
+            "nullable": true
+          },
+          "mac": {
+            "type": "string",
+            "description": "MACアドレス",
+            "format": "mac",
+            "readOnly": true,
+            "example": "9C:A3:BA:00:00:00"
+          },
+          "switch_id": {
+            "type": "integer",
+            "description": "スイッチID",
+            "example": 1,
+            "nullable": true
+          }
+        }
+      },
+      "NfsServer": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "service_status",
+          "setting_status",
+          "storage",
+          "zone",
+          "ipv4",
+          "contract",
+          "power_status"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "name": {
+            "description": "名前",
+            "type": "string"
+          },
+          "description": {
+            "description": "説明",
+            "type": "string"
+          },
+          "service_status": {
+            "description": "サービス状況\n* in_preparation 準備中\n* on_trial お試し中\n* link_down_on_trial お試し中（一時停止）\n* in_use 利用中\n* link_down 一時停止中",
+            "type": "string",
+            "enum": [
+              "in_preparation",
+              "on_trial",
+              "link_down_on_trial",
+              "in_use",
+              "link_down"
+            ]
+          },
+          "setting_status": {
+            "description": "設定状況\n* done 設定完了\n* in_update 設定更新中\n* failed 設定更新失敗",
+            "type": "string",
+            "enum": [
+              "done",
+              "in_update",
+              "failed"
+            ]
+          },
+          "storage": {
+            "description": "ストレージ情報",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "port",
+                "type",
+                "size_gibibytes"
+              ],
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "種別",
+                  "enum": [
+                    "ssd",
+                    "hdd"
+                  ]
+                },
+                "size_gibibytes": {
+                  "type": "integer",
+                  "description": "ストレージ容量(GiB)",
+                  "example": 100
+                }
+              }
+            }
+          },
+          "zone": {
+            "description": "ゾーン情報",
+            "type": "object",
+            "required": [
+              "code",
+              "name"
+            ],
+            "properties": {
+              "code": {
+                "description": "ゾーンコード\n* tk1 東京第1\n* tk2 東京第2\n* tk3 東京第3\n* os1 大阪第1\n* os2 大阪第2\n* os3 大阪第3\n* is1 石狩第1",
+                "enum": [
+                  "tk1",
+                  "tk2",
+                  "tk3",
+                  "os1",
+                  "os2",
+                  "os3",
+                  "is1"
+                ],
+                "type": "string"
+              },
+              "name": {
+                "description": "ゾーン名称",
+                "type": "string",
+                "example": "石狩第1"
+              }
+            }
+          },
+          "ipv4": {
+            "type": "object",
+            "required": [
+              "address",
+              "netmask"
+            ],
+            "properties": {
+              "address": {
+                "type": "string",
+                "description": "アドレス",
+                "example": "198.51.100.2"
+              },
+              "netmask": {
+                "type": "string",
+                "description": "サブネットマスク",
+                "example": "255.255.254.0"
+              }
+            }
+          },
+          "contract": {
+            "type": "object",
+            "description": "契約情報",
+            "required": [
+              "plan_code",
+              "plan_name",
+              "service_code"
+            ],
+            "properties": {
+              "plan_code": {
+                "type": "integer",
+                "description": "プランコード",
+                "example": 3439
+              },
+              "plan_name": {
+                "type": "string",
+                "description": "プラン名",
+                "example": "さくらのVPS(v5)  NFS 200GB OS03"
+              },
+              "service_code": {
+                "description": "サービスコード",
+                "type": "string",
+                "example": "100000000000"
+              }
+            }
+          },
+          "power_status": {
+            "type": "string",
+            "description": "電源ステータス\n* power_on 電源ON\n* in_shutdown シャットダウン中\n* power_off 電源OFF\n* unknown 不明（電源状態を取得できない）\nこのエンドポイントが返す電源ステータスはキャッシュされた情報のため、最新の正確な電源ステータスではない場合があります",
+            "enum": [
+              "power_on",
+              "in_shutdown",
+              "power_off",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "NfsServerPowerStatus": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "電源ステータス\n* power_on 電源ON\n* in_shutdown シャットダウン中\n* power_off 電源OFF\n* unknown 不明（電源状態を取得できない）",
+            "enum": [
+              "power_on",
+              "in_shutdown",
+              "power_off",
+              "unknown"
+            ]
+          }
+        }
+      },
+      "NfsServerInterface": {
+        "type": "object",
+        "required": [
+          "id",
+          "device",
+          "connect_to",
+          "mac",
+          "switch_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id",
+            "readOnly": true
+          },
+          "device": {
+            "type": "string",
+            "description": "NIC名称",
+            "example": "eth0",
+            "readOnly": true
+          },
+          "connect_to": {
+            "type": "string",
+            "description": "インターフェースの接続先",
+            "example": "switch",
+            "enum": [
+              "switch"
+            ],
+            "readOnly": true,
+            "nullable": true
+          },
+          "mac": {
+            "type": "string",
+            "description": "MACアドレス",
+            "format": "mac",
+            "readOnly": true,
+            "example": "9C:A3:BA:00:00:00"
+          },
+          "switch_id": {
+            "type": "integer",
+            "description": "スイッチID",
+            "example": 1,
+            "nullable": true
+          }
+        }
+      },
+      "Switch": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "switch_code",
+          "zone",
+          "server_interfaces",
+          "nfs_server_interfaces",
+          "external_connection"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "id"
+          },
+          "name": {
+            "type": "string",
+            "description": "名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "説明"
+          },
+          "switch_code": {
+            "type": "string",
+            "readOnly": true,
+            "description": "スイッチコード"
+          },
+          "zone": {
+            "type": "object",
+            "readOnly": true,
+            "description": "ゾーン情報",
+            "required": [
+              "code",
+              "name"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "readOnly": true,
+                "description": "ゾーンコード\n* tk1 東京第1\n* tk2 東京第2\n* tk3 東京第3\n* os1 大阪第1\n* os2 大阪第2\n* os3 大阪第3\n* is1 石狩第1",
+                "enum": [
+                  "tk1",
+                  "tk2",
+                  "tk3",
+                  "os1",
+                  "os2",
+                  "os3",
+                  "is1"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "readOnly": true,
+                "description": "ゾーン名称",
+                "example": "石狩第1"
+              }
+            }
+          },
+          "server_interfaces": {
+            "type": "array",
+            "readOnly": true,
+            "description": "接続されているサーバーのインターフェースid",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "nfs_server_interfaces": {
+            "type": "array",
+            "readOnly": true,
+            "description": "接続されている追加ストレージ（NFS）のインターフェースid",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "external_connection": {
+            "type": "object",
+            "readOnly": true,
+            "nullable": true,
+            "description": "接続されている外部接続の情報",
+            "required": [
+              "service_code",
+              "type",
+              "services"
+            ],
+            "properties": {
+              "service_code": {
+                "type": "string",
+                "readOnly": true,
+                "description": "サービスコード",
+                "example": "100000000000"
+              },
+              "type": {
+                "type": "string",
+                "readOnly": true,
+                "description": "外部接続方式",
+                "enum": [
+                  "cloud",
+                  "sales",
+                  "localrouter",
+                  "awsdxcon"
+                ]
+              },
+              "services": {
+                "type": "array",
+                "readOnly": true,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "service_category",
+                    "service_name",
+                    "switch_code"
+                  ],
+                  "properties": {
+                    "service_category": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "サービスカテゴリー",
+                      "example": "cloud"
+                    },
+                    "service_name": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "サービス名",
+                      "example": "クラウド東京第1ゾーン"
+                    },
+                    "switch_code": {
+                      "type": "string",
+                      "readOnly": true,
+                      "description": "スイッチコード",
+                      "example": "111111111111"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Disc": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "license_required"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "name": {
+            "type": "string",
+            "description": "名前"
+          },
+          "description": {
+            "type": "string",
+            "description": "説明"
+          },
+          "license_required": {
+            "type": "boolean",
+            "description": "ライセンスが必要かどうか"
+          }
+        }
+      },
+      "ServerMonitoring": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "monitoring_resource_id",
+          "update_status",
+          "settings"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "readOnly": true,
+            "description": "id"
+          },
+          "name": {
+            "type": "string",
+            "description": "名前",
+            "maxLength": 255
+          },
+          "description": {
+            "type": "string",
+            "description": "説明",
+            "maxLength": 10000
+          },
+          "monitoring_resource_id": {
+            "type": "string",
+            "readOnly": true,
+            "description": "監視リソースID"
+          },
+          "update_status": {
+            "type": "string",
+            "readOnly": true,
+            "description": "更新ステータス\n* waiting 更新待ち\n* updating 更新中\n* completed 更新完了\n* error 更新エラー",
+            "enum": [
+              "waiting",
+              "updating",
+              "completed",
+              "error"
+            ]
+          },
+          "settings": {
+            "type": "object",
+            "required": [
+              "enabled",
+              "health_check",
+              "notification"
+            ],
+            "properties": {
+              "enabled": {
+                "type": "boolean",
+                "description": "監視のON/OFF\n* true 監視ON\n* false 監視OFF"
+              },
+              "health_check": {
+                "type": "object",
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/HealthCheckPing"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckTcp"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckSsh"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckSmtp"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckPop3"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckHttp"
+                  },
+                  {
+                    "$ref": "#/components/schemas/HealthCheckHttps"
+                  }
+                ]
+              },
+              "notification": {
+                "type": "object",
+                "required": [
+                  "email",
+                  "incoming_webhook",
+                  "interval_hours"
+                ],
+                "properties": {
+                  "email": {
+                    "type": "object",
+                    "description": "emailでの通知の設定。会員情報に登録されているメールアドレス宛に送信されます。",
+                    "required": [
+                      "enabled"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean",
+                        "description": "通知のON/OFF\n* true 通知ON\n* false 通知OFF"
+                      }
+                    }
+                  },
+                  "incoming_webhook": {
+                    "type": "object",
+                    "description": "incoming webhookでの通知の設定",
+                    "required": [
+                      "enabled",
+                      "webhooks_url",
+                      "slack_team_name",
+                      "slack_channel_name"
+                    ],
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean",
+                        "description": "通知のON/OFF\n* true 通知ON\n* false 通知OFF"
+                      },
+                      "webhooks_url": {
+                        "type": "string",
+                        "format": "uri",
+                        "description": "通知先のWebhooksURL。\nSlack、Discord、Microsoft TeamsのIncoming WebHooksにのみ対応しています。\n指定できるURLは各サービスのWebhook URL(https://hooks.slack.com/services/* など)の形式に制限されています。\nDiscordの場合は[Slack互換のWebhook URL](https://discord.com/developers/docs/resources/webhook#execute-slackcompatible-webhook)を指定してください。",
+                        "minLength": 1,
+                        "maxLength": 500,
+                        "nullable": true
+                      },
+                      "slack_team_name": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "slackのteam name。VPSコントロールパネルの「Slackと自動で連携をする」を利用した場合に設定されます。"
+                      },
+                      "slack_channel_name": {
+                        "type": "string",
+                        "readOnly": true,
+                        "description": "slackのchannel name。VPSコントロールパネルの「Slackと自動で連携をする」を利用した場合に設定されます。"
+                      }
+                    }
+                  },
+                  "interval_hours": {
+                    "type": "integer",
+                    "description": "再通知間隔(時間)",
+                    "minimum": 1,
+                    "maximum": 72
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "HealthCheckPing": {
+        "required": [
+          "protocol",
+          "interval_minutes"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "監視方法",
+            "enum": [
+              "ping"
+            ]
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckTcp": {
+        "required": [
+          "protocol",
+          "port",
+          "interval_minutes"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "監視方法",
+            "enum": [
+              "tcp"
+            ]
+          },
+          "port": {
+            "type": "integer",
+            "description": "ポート番号",
+            "minimum": 1,
+            "maximum": 65535
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckSsh": {
+        "required": [
+          "protocol",
+          "port",
+          "interval_minutes"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "監視方法",
+            "enum": [
+              "ssh"
+            ]
+          },
+          "port": {
+            "type": "integer",
+            "description": "ポート番号",
+            "minimum": 1,
+            "maximum": 65535,
+            "example": 22
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckSmtp": {
+        "required": [
+          "protocol",
+          "port",
+          "interval_minutes"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "監視方法",
+            "enum": [
+              "smtp"
+            ]
+          },
+          "port": {
+            "type": "integer",
+            "description": "ポート番号",
+            "minimum": 1,
+            "maximum": 65535,
+            "example": 25
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckPop3": {
+        "required": [
+          "protocol",
+          "port",
+          "interval_minutes"
+        ],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "description": "監視方法",
+            "enum": [
+              "pop3"
+            ]
+          },
+          "port": {
+            "type": "integer",
+            "description": "ポート番号",
+            "minimum": 1,
+            "maximum": 65535,
+            "example": 110
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckHttpBase": {
+        "required": [
+          "port",
+          "host",
+          "path",
+          "basic_auth_username",
+          "basic_auth_password",
+          "status",
+          "interval_minutes"
+        ],
+        "properties": {
+          "port": {
+            "type": "integer",
+            "description": "ポート番号",
+            "minimum": 1,
+            "maximum": 65535,
+            "example": 80
+          },
+          "host": {
+            "type": "string",
+            "description": "監視用HTTPリクエストのHostヘッダ  \nRFCの定義に基づいて下記の制限をかけています\n* ラベルは2つ以上必要\n* 各ラベルについて\n  * 利用できる文字\n    * 半角数字 0～9\n    * 半角英小文字 a～z\n    * 半角記号 -\n  * 両端が-でないこと\n  * -が2つ以上続かないこと。ただしpunycodeの接頭辞`xn--`を除く\n  * 下記パターン(RFCなどで予約または禁止されているパターン)と一致しないこと\n    * isatap\n    * wpad\n    * example\n    * example0～example9\n* 最後のラベルについて\n  * 利用できる文字\n    * 半角英小文字 a～z\n  * 下記のパターン(RFC予約済みのDNS名)と一致しないこと\n    * test\n    * localhost",
+            "minLength": 1,
+            "maxLength": 63,
+            "nullable": true
+          },
+          "path": {
+            "type": "string",
+            "description": "監視対象のパス\n* 利用できる文字 \n  * 半角数字 0～9\n  * 半角英字 A～Z、a～z\n  * 半角記号 _./~%?=-&",
+            "example": "/",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "basic_auth_username": {
+            "type": "string",
+            "description": "ベーシック認証のユーザー名\n* 利用できる文字 \n  * 半角数字 0～9\n  * 半角英字 A～Z、a～z\n  * 半角記号 _.-+!@",
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 20
+          },
+          "basic_auth_password": {
+            "type": "string",
+            "description": "ベーシック認証のパスワード\n* 利用できる文字 \n  * 半角数字 0～9\n  * 半角英字 A～Z、a～z\n  * 半角記号 !#$%&()*+,-./:<=>?@[]^_`{|}~",
+            "nullable": true,
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "status": {
+            "type": "integer",
+            "description": "正常と見なすHTTPステータスコード",
+            "minimum": 100,
+            "maximum": 999
+          },
+          "interval_minutes": {
+            "type": "integer",
+            "description": "チェック間隔(分)",
+            "minimum": 1,
+            "maximum": 60
+          }
+        }
+      },
+      "HealthCheckHttp": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "protocol"
+            ],
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "監視方法",
+                "enum": [
+                  "http"
+                ]
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/HealthCheckHttpBase"
+          }
+        ]
+      },
+      "HealthCheckHttps": {
+        "allOf": [
+          {
+            "type": "object",
+            "required": [
+              "protocol",
+              "sni"
+            ],
+            "properties": {
+              "protocol": {
+                "type": "string",
+                "description": "監視方法",
+                "enum": [
+                  "https"
+                ]
+              },
+              "sni": {
+                "type": "boolean",
+                "description": "SNIを設定しているWebサーバか\n* true SNI設定あり\n* false SNI設定なし"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/HealthCheckHttpBase"
+          }
+        ]
+      },
+      "ServerMonitoringHealth": {
+        "required": [
+          "last_checked_at",
+          "status",
+          "last_status_changed_at"
+        ],
+        "properties": {
+          "last_checked_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "最終監視日時",
+            "example": "2024-04-15T23:59:59+09:00",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "description": "ステータス\n  * healthy 正常\n  * unhealthy 異常",
+            "enum": [
+              "healthy",
+              "unhealthy"
+            ],
+            "nullable": true
+          },
+          "last_status_changed_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "最終ステータス変更日時",
+            "example": "2024-04-01T23:59:59+09:00",
+            "nullable": true
+          }
+        }
+      },
+      "Zone": {
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "name",
+          "can_use_local",
+          "can_use_hybrid"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id"
+          },
+          "code": {
+            "type": "string",
+            "description": "ゾーンコード\n* tk1 東京第1\n* tk2 東京第2\n* tk3 東京第3\n* os1 大阪第1\n* os2 大阪第2\n* os3 大阪第3\n* is1 石狩第1",
+            "enum": [
+              "tk1",
+              "tk2",
+              "tk3",
+              "os1",
+              "os2",
+              "os3",
+              "is1"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "ゾーン名称"
+          },
+          "can_use_local": {
+            "type": "boolean",
+            "description": "ローカルネットワーク接続が可能かどうか"
+          },
+          "can_use_hybrid": {
+            "type": "boolean",
+            "description": "ハイブリッド接続が利用可能かどうか"
+          }
+        }
+      },
+      "Role": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "description",
+          "permission_filtering",
+          "allowed_permissions",
+          "resource_filtering",
+          "allowed_resources"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "名前",
+            "maxLength": 100
+          },
+          "description": {
+            "type": "string",
+            "description": "説明",
+            "maxLength": 512
+          },
+          "permission_filtering": {
+            "type": "string",
+            "description": "利用できる権限を制限するか",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "allowed_permissions": {
+            "type": "array",
+            "description": "利用できる権限。permission_filteringがenabledの場合のみ指定可能。**権限の一覧を取得する**`/permissions`のcode値を指定します。",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "get-server-list",
+              "get-server",
+              "put-server"
+            ]
+          },
+          "resource_filtering": {
+            "type": "string",
+            "description": "利用できるリソースを制限するか",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "allowed_resources": {
+            "type": "object",
+            "description": "利用できるリソース。resource_filteringがenabledの場合のみ指定可能。",
+            "nullable": true,
+            "properties": {
+              "servers": {
+                "type": "array",
+                "description": "利用できるサーバーのid",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "switches": {
+                "type": "array",
+                "description": "利用できるスイッチのid",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "nfs_servers": {
+                "type": "array",
+                "description": "利用できるNFSのid",
+                "items": {
+                  "type": "integer"
+                },
+                "example": [
+                  1,
+                  2,
+                  3
+                ]
+              }
+            }
+          }
+        }
+      },
+      "ApiKey": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "role",
+          "token"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "description": "名前",
+            "maxLength": 100
+          },
+          "role": {
+            "type": "integer",
+            "description": "ロールID"
+          },
+          "token": {
+            "type": "string",
+            "description": "APIのアクセストークン。APIキー作成時とトークンローテーション時以外は情報を`*`でマスクして返します。",
+            "readOnly": true
+          }
+        }
+      },
+      "Permission": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "category"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "権限のcode",
+            "example": "get-server-list"
+          },
+          "name": {
+            "type": "string",
+            "description": "名前",
+            "example": "サーバー一覧の取得"
+          },
+          "category": {
+            "type": "string",
+            "description": "権限のカテゴリー",
+            "example": "server"
+          }
+        }
+      },
+      "Keymap": {
+        "type": "object",
+        "required": [
+          "layout"
+        ],
+        "properties": {
+          "layout": {
+            "type": "string",
+            "description": "指定したいキー配列の名称",
+            "enum": [
+              "ja",
+              "en-us"
+            ]
+          }
+        }
+      }
+    },
+    "responses": {
+      "Generic400": {
+        "description": "入力値検証エラー",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetails400"
+            }
+          }
+        }
+      },
+      "Generic401": {
+        "description": "未ログイン",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "not_authenticated"
+                  ],
+                  "description": "エラー内容を示す簡潔な識別子"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "エラーの内容",
+                  "example": "認証情報が含まれていません。"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Generic403": {
+        "description": "権限がない",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "enum": [
+                    "permission_denied"
+                  ],
+                  "description": "エラー内容を示す簡潔な識別子"
+                },
+                "message": {
+                  "type": "string",
+                  "description": "エラーの内容",
+                  "example": "このアクションを実行する権限がありません。"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Generic429": {
+        "description": "リクエスト可能数に達している",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProblemDetails429"
+            }
+          }
+        },
+        "headers": {
+          "Retry-After": {
+            "description": "リクエストが可能になるまでの秒数",
+            "schema": {
+              "type": "integer",
+              "example": 60
+            }
+          }
+        }
+      }
+    }
+  }
+}
