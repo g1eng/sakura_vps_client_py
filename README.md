@@ -258,3 +258,7 @@ Authentication schemes defined for the API:
 
 
 
+* Nomura Suzume
+
+
+The OpenAPI spec included in the repository is derived from the CC-BY 4.0 licensed part of the [original one](https://manual.sakura.ad.jp/vps/api/api-doc/), authored by [Sakura Internet Inc](https://www.sakura.ad.jp).
