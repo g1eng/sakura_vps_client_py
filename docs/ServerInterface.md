@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **int** | id | [readonly] 
-**device** | **str** | NIC名称 | [readonly] 
+**display_name** | **str** | インターフェース名 | [readonly] 
 **connectable_to_global_network** | **bool** | グローバルネットワークと接続可能か | [readonly] 
 **connect_to** | **str** | インターフェースの接続先 | [readonly] 
 **mac** | **str** | MACアドレス | [readonly] 

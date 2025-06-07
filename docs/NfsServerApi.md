@@ -8,7 +8,11 @@ Method | HTTP request | Description
 [**get_nfs_server_interface**](NfsServerApi.md#get_nfs_server_interface) | **GET** /nfs-servers/{nfs_server_id}/interface | NFSのインターフェースを取得する
 [**get_nfs_server_list**](NfsServerApi.md#get_nfs_server_list) | **GET** /nfs-servers | NFS情報一覧を取得する
 [**get_nfs_server_power_status**](NfsServerApi.md#get_nfs_server_power_status) | **GET** /nfs-servers/{nfs_server_id}/power-status | NFSの電源状態を取得する
+[**get_nfs_server_storage**](NfsServerApi.md#get_nfs_server_storage) | **GET** /nfs-servers/{nfs_server_id}/storage | NFSのストレージ容量情報を取得する
 [**post_nfs_server_change_ipv4**](NfsServerApi.md#post_nfs_server_change_ipv4) | **POST** /nfs-servers/{nfs_server_id}/change-ipv4 | NFSのipv4を更新する
+[**post_nfs_server_force_reboot**](NfsServerApi.md#post_nfs_server_force_reboot) | **POST** /nfs-servers/{nfs_server_id}/force-reboot | NFSを強制再起動する
+[**post_nfs_server_power_on**](NfsServerApi.md#post_nfs_server_power_on) | **POST** /nfs-servers/{nfs_server_id}/power-on | NFSを起動する
+[**post_nfs_server_shutdown**](NfsServerApi.md#post_nfs_server_shutdown) | **POST** /nfs-servers/{nfs_server_id}/shutdown | NFSをシャットダウンする
 [**put_nfs_server**](NfsServerApi.md#put_nfs_server) | **PUT** /nfs-servers/{nfs_server_id} | NFS情報を更新する
 [**put_nfs_server_interface**](NfsServerApi.md#put_nfs_server_interface) | **PUT** /nfs-servers/{nfs_server_id}/interface | NFSのインターフェース情報を更新する
 
@@ -344,6 +348,88 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_nfs_server_storage**
+> NfsStorageInfo get_nfs_server_storage(nfs_server_id)
+
+NFSのストレージ容量情報を取得する
+
+### Example
+
+* Bearer Authentication (ApiKeyAuth):
+
+```python
+import sakura_vps_client_py
+from sakura_vps_client_py.models.nfs_storage_info import NfsStorageInfo
+from sakura_vps_client_py.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://secure.sakura.ad.jp/vps/api/v7
+# See configuration.py for a list of all supported configuration parameters.
+configuration = sakura_vps_client_py.Configuration(
+    host = "https://secure.sakura.ad.jp/vps/api/v7"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: ApiKeyAuth
+configuration = sakura_vps_client_py.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with sakura_vps_client_py.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = sakura_vps_client_py.NfsServerApi(api_client)
+    nfs_server_id = 56 # int | NFSのID
+
+    try:
+        # NFSのストレージ容量情報を取得する
+        api_response = api_instance.get_nfs_server_storage(nfs_server_id)
+        print("The response of NfsServerApi->get_nfs_server_storage:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling NfsServerApi->get_nfs_server_storage: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **nfs_server_id** | **int**| NFSのID | 
+
+### Return type
+
+[**NfsStorageInfo**](NfsStorageInfo.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | 成功 |  -  |
+**401** | 未ログイン |  -  |
+**403** | 権限がない |  -  |
+**404** | NFSが見つからない |  -  |
+**409** | ストレージ容量情報を取得できない状態 |  -  |
+**429** | リクエスト可能数に達している |  * Retry-After - リクエストが可能になるまでの秒数 <br>  |
+**503** | 一時的にストレージ容量情報を取得できない |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **post_nfs_server_change_ipv4**
 > post_nfs_server_change_ipv4(nfs_server_id, post_nfs_server_change_ipv4_request=post_nfs_server_change_ipv4_request)
 
@@ -424,6 +510,246 @@ void (empty response body)
 **409** | ipv4の設定が行えない状態にある（すでにipv4の設定中である場合やNFSが起動されていない場合など） |  -  |
 **429** | リクエスト可能数に達している |  * Retry-After - リクエストが可能になるまでの秒数 <br>  |
 **503** | ipv4の設定のリクエストの送信に失敗した |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_nfs_server_force_reboot**
+> post_nfs_server_force_reboot(nfs_server_id)
+
+NFSを強制再起動する
+
+### Example
+
+* Bearer Authentication (ApiKeyAuth):
+
+```python
+import sakura_vps_client_py
+from sakura_vps_client_py.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://secure.sakura.ad.jp/vps/api/v7
+# See configuration.py for a list of all supported configuration parameters.
+configuration = sakura_vps_client_py.Configuration(
+    host = "https://secure.sakura.ad.jp/vps/api/v7"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: ApiKeyAuth
+configuration = sakura_vps_client_py.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with sakura_vps_client_py.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = sakura_vps_client_py.NfsServerApi(api_client)
+    nfs_server_id = 56 # int | NFSのID
+
+    try:
+        # NFSを強制再起動する
+        api_instance.post_nfs_server_force_reboot(nfs_server_id)
+    except Exception as e:
+        print("Exception when calling NfsServerApi->post_nfs_server_force_reboot: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **nfs_server_id** | **int**| NFSのID | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | NFS強制再起動コマンドの送信を完了 |  -  |
+**401** | 未ログイン |  -  |
+**403** | 権限がない |  -  |
+**404** | NFSが見つからない |  -  |
+**409** | 再起動リクエストを受け付けない状態にある（設定状況が設定完了になっていない場合など） |  -  |
+**429** | リクエスト可能数に達している |  * Retry-After - リクエストが可能になるまでの秒数 <br>  |
+**503** | NFS再起動コマンドの送信に失敗した |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_nfs_server_power_on**
+> post_nfs_server_power_on(nfs_server_id)
+
+NFSを起動する
+
+### Example
+
+* Bearer Authentication (ApiKeyAuth):
+
+```python
+import sakura_vps_client_py
+from sakura_vps_client_py.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://secure.sakura.ad.jp/vps/api/v7
+# See configuration.py for a list of all supported configuration parameters.
+configuration = sakura_vps_client_py.Configuration(
+    host = "https://secure.sakura.ad.jp/vps/api/v7"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: ApiKeyAuth
+configuration = sakura_vps_client_py.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with sakura_vps_client_py.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = sakura_vps_client_py.NfsServerApi(api_client)
+    nfs_server_id = 56 # int | NFSのID
+
+    try:
+        # NFSを起動する
+        api_instance.post_nfs_server_power_on(nfs_server_id)
+    except Exception as e:
+        print("Exception when calling NfsServerApi->post_nfs_server_power_on: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **nfs_server_id** | **int**| NFSのID | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | NFS起動コマンドの送信を完了 |  -  |
+**401** | 未ログイン |  -  |
+**403** | 権限がない |  -  |
+**404** | NFSが見つからない |  -  |
+**409** | 起動リクエストを受け付けない状態にある（設定状況が設定完了になっていない場合や、既に起動中の場合など） |  -  |
+**429** | リクエスト可能数に達している |  * Retry-After - リクエストが可能になるまでの秒数 <br>  |
+**503** | NFS起動コマンドの送信に失敗した |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **post_nfs_server_shutdown**
+> post_nfs_server_shutdown(nfs_server_id, post_server_shutdown_request=post_server_shutdown_request)
+
+NFSをシャットダウンする
+
+### Example
+
+* Bearer Authentication (ApiKeyAuth):
+
+```python
+import sakura_vps_client_py
+from sakura_vps_client_py.models.post_server_shutdown_request import PostServerShutdownRequest
+from sakura_vps_client_py.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://secure.sakura.ad.jp/vps/api/v7
+# See configuration.py for a list of all supported configuration parameters.
+configuration = sakura_vps_client_py.Configuration(
+    host = "https://secure.sakura.ad.jp/vps/api/v7"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: ApiKeyAuth
+configuration = sakura_vps_client_py.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with sakura_vps_client_py.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = sakura_vps_client_py.NfsServerApi(api_client)
+    nfs_server_id = 56 # int | NFSのID
+    post_server_shutdown_request = sakura_vps_client_py.PostServerShutdownRequest() # PostServerShutdownRequest |  (optional)
+
+    try:
+        # NFSをシャットダウンする
+        api_instance.post_nfs_server_shutdown(nfs_server_id, post_server_shutdown_request=post_server_shutdown_request)
+    except Exception as e:
+        print("Exception when calling NfsServerApi->post_nfs_server_shutdown: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **nfs_server_id** | **int**| NFSのID | 
+ **post_server_shutdown_request** | [**PostServerShutdownRequest**](PostServerShutdownRequest.md)|  | [optional] 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**202** | NFSシャットダウンコマンドの送信を完了 |  -  |
+**401** | 未ログイン |  -  |
+**403** | 権限がない |  -  |
+**404** | NFSが見つからない |  -  |
+**409** | シャットダウンリクエストを受け付けない状態にある（設定状況が設定完了になっていない場合や、すでにシャットダウンされている場合など） |  -  |
+**429** | リクエスト可能数に達している |  * Retry-After - リクエストが可能になるまでの秒数 <br>  |
+**503** | NFSシャットダウンコマンドの送信に失敗した |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
