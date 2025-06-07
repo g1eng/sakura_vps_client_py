@@ -1,0 +1,27 @@
+name: check code generation on push
+
+on:
+  workflow_run:
+    workflows: ["check upstream changes"]
+    branches:
+      - main
+  push:
+    branches:
+      - fix-gha
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: download openapi-generator
+        run: wget -O openapi-generator-cli.jar  "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.13.0/openapi-generator-cli-7.13.0.jar"
+      - name: install wrapper script
+        run: sudo sh -c "printf -- \#!/bin/sh\ -ex\\\njava\ -jar\ openapi-generator-cli.jar\ \\\$@\\\n > /usr/bin/openapi-generator; chmod +x /usr/bin/openapi-generator"
+      - name: sync
+        run: make renew
