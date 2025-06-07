@@ -273,7 +273,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_server_interface_list**
-> GetServerInterfaceList200Response get_server_interface_list(server_id)
+> GetServerInterfaceList200Response get_server_interface_list(server_id, page=page, per_page=per_page)
 
 サーバーのインターフェース情報一覧を取得する
 
@@ -308,10 +308,12 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = sakura_vps_client_py.ServerApi(api_client)
     server_id = 56 # int | サーバーID
+    page = 56 # int |  (optional)
+    per_page = 10 # int |  (optional) (default to 10)
 
     try:
         # サーバーのインターフェース情報一覧を取得する
-        api_response = api_instance.get_server_interface_list(server_id)
+        api_response = api_instance.get_server_interface_list(server_id, page=page, per_page=per_page)
         print("The response of ServerApi->get_server_interface_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -326,6 +328,8 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **server_id** | **int**| サーバーID | 
+ **page** | **int**|  | [optional] 
+ **per_page** | **int**|  | [optional] [default to 10]
 
 ### Return type
 

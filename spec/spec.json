@@ -1,13 +1,12 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "4.3.0",
+    "version": "5.0.0",
     "title": "さくらのVPS APIドキュメント",
     "x-logo": {
       "url": "logo.svg",
       "altText": "さくらのVPS APIドキュメント"
-    },
-    "description": "Sakura VPS API client written in Python (generated with openapi-generator)"
+    }
   },
   "servers": [
     {
@@ -730,6 +729,12 @@
     },
     "/servers/{server_id}/interfaces": {
       "parameters": [
+        {
+          "$ref": "#/components/parameters/PaginationPage"
+        },
+        {
+          "$ref": "#/components/parameters/PaginationPerPage"
+        },
         {
           "$ref": "#/components/parameters/ServerID"
         }
@@ -1891,6 +1896,196 @@
         }
       }
     },
+    "/nfs-servers/{nfs_server_id}/power-on": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "post": {
+        "summary": "NFSを起動する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "post-nfs-server-power-on",
+        "responses": {
+          "202": {
+            "description": "NFS起動コマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "起動リクエストを受け付けない状態にある（設定状況が設定完了になっていない場合や、既に起動中の場合など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "NFS起動コマンドの送信に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/force-reboot": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "post": {
+        "summary": "NFSを強制再起動する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "post-nfs-server-force-reboot",
+        "responses": {
+          "202": {
+            "description": "NFS強制再起動コマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "再起動リクエストを受け付けない状態にある（設定状況が設定完了になっていない場合など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "NFS再起動コマンドの送信に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/shutdown": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "post": {
+        "summary": "NFSをシャットダウンする",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "post-nfs-server-shutdown",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "force": {
+                    "type": "boolean",
+                    "description": "強制停止を行うか",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "NFSシャットダウンコマンドの送信を完了"
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "シャットダウンリクエストを受け付けない状態にある（設定状況が設定完了になっていない場合や、すでにシャットダウンされている場合など）",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "NFSシャットダウンコマンドの送信に失敗した",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/nfs-servers/{nfs_server_id}/interface": {
       "parameters": [
         {
@@ -1995,6 +2190,71 @@
           },
           "503": {
             "description": "一時的に接続操作を受け付けない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails503"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/nfs-servers/{nfs_server_id}/storage": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/NfsServerID"
+        }
+      ],
+      "get": {
+        "summary": "NFSのストレージ容量情報を取得する",
+        "tags": [
+          "nfs-server"
+        ],
+        "operationId": "get-nfs-server-storage",
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NfsStorageInfo"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Generic401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Generic403"
+          },
+          "404": {
+            "description": "NFSが見つからない",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails404"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "ストレージ容量情報を取得できない状態",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails409"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/Generic429"
+          },
+          "503": {
+            "description": "一時的にストレージ容量情報を取得できない",
             "content": {
               "application/json": {
                 "schema": {
@@ -2383,6 +2643,14 @@
           "disc"
         ],
         "operationId": "get-disc-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -2431,6 +2699,14 @@
           "zone"
         ],
         "operationId": "get-zone-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -2530,6 +2806,12 @@
         ],
         "operationId": "get-api-key-list",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
           {
             "$ref": "#/components/parameters/ApiKeySortOrder"
           },
@@ -2814,6 +3096,12 @@
         "operationId": "get-role-list",
         "parameters": [
           {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
             "$ref": "#/components/parameters/RoleSortOrder"
           },
           {
@@ -2998,20 +3286,26 @@
       }
     },
     "/permissions": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/Category"
-        },
-        {
-          "$ref": "#/components/parameters/Code"
-        }
-      ],
       "get": {
         "summary": "権限の一覧を取得する",
         "tags": [
           "api-key"
         ],
         "operationId": "get-permission-list",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PaginationPage"
+          },
+          {
+            "$ref": "#/components/parameters/PaginationPerPage"
+          },
+          {
+            "$ref": "#/components/parameters/Category"
+          },
+          {
+            "$ref": "#/components/parameters/Code"
+          }
+        ],
         "responses": {
           "200": {
             "description": "成功",
@@ -3863,7 +4157,7 @@
         "type": "object",
         "required": [
           "id",
-          "device",
+          "display_name",
           "connectable_to_global_network",
           "connect_to",
           "mac",
@@ -3875,11 +4169,16 @@
             "description": "id",
             "readOnly": true
           },
-          "device": {
+          "display_name": {
             "type": "string",
-            "description": "NIC名称",
-            "example": "eth0",
-            "readOnly": true
+            "description": "インターフェース名",
+            "example": "NIC1",
+            "readOnly": true,
+            "enum": [
+              "NIC1",
+              "NIC2",
+              "NIC3"
+            ]
           },
           "connectable_to_global_network": {
             "type": "boolean",
@@ -4093,24 +4392,11 @@
       "NfsServerInterface": {
         "type": "object",
         "required": [
-          "id",
-          "device",
           "connect_to",
           "mac",
           "switch_id"
         ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "description": "id",
-            "readOnly": true
-          },
-          "device": {
-            "type": "string",
-            "description": "NIC名称",
-            "example": "eth0",
-            "readOnly": true
-          },
           "connect_to": {
             "type": "string",
             "description": "インターフェースの接続先",
@@ -4133,6 +4419,41 @@
             "description": "スイッチID",
             "example": 1,
             "nullable": true
+          }
+        }
+      },
+      "NfsStorageInfo": {
+        "type": "object",
+        "required": [
+          "free_space_kib",
+          "usage_percentage",
+          "capacity_kib",
+          "usage_kib"
+        ],
+        "properties": {
+          "free_space_kib": {
+            "type": "integer",
+            "description": "ストレージの空き容量（KiB）",
+            "example": 411501820,
+            "readOnly": true
+          },
+          "usage_percentage": {
+            "type": "integer",
+            "description": "ストレージの使用率",
+            "example": 1,
+            "readOnly": true
+          },
+          "capacity_kib": {
+            "type": "integer",
+            "description": "ストレージの全容量（KiB）",
+            "example": 411564672,
+            "readOnly": true
+          },
+          "usage_kib": {
+            "type": "integer",
+            "description": "ストレージの使用容量（KiB）",
+            "example": 62852,
+            "readOnly": true
           }
         }
       },

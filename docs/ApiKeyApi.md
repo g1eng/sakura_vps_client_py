@@ -254,7 +254,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_api_key_list**
-> GetApiKeyList200Response get_api_key_list(order=order, role=role, search=search)
+> GetApiKeyList200Response get_api_key_list(page=page, per_page=per_page, order=order, role=role, search=search)
 
 APIキーの一覧を取得する
 
@@ -288,13 +288,15 @@ configuration = sakura_vps_client_py.Configuration(
 with sakura_vps_client_py.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = sakura_vps_client_py.ApiKeyApi(api_client)
+    page = 56 # int |  (optional)
+    per_page = 10 # int |  (optional) (default to 10)
     order = 'order_example' # str | データの並び順。項目名の頭に`-`をつけると降順で取得する   例: * 名称昇順: sort=name * 名称降順: sort=-name (optional)
     role = 56 # int | roleのid。ロールで絞り込む (optional)
     search = 'search_example' # str | 名前から部分一致検索 (optional)
 
     try:
         # APIキーの一覧を取得する
-        api_response = api_instance.get_api_key_list(order=order, role=role, search=search)
+        api_response = api_instance.get_api_key_list(page=page, per_page=per_page, order=order, role=role, search=search)
         print("The response of ApiKeyApi->get_api_key_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -308,6 +310,8 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **page** | **int**|  | [optional] 
+ **per_page** | **int**|  | [optional] [default to 10]
  **order** | **str**| データの並び順。項目名の頭に&#x60;-&#x60;をつけると降順で取得する   例: * 名称昇順: sort&#x3D;name * 名称降順: sort&#x3D;-name | [optional] 
  **role** | **int**| roleのid。ロールで絞り込む | [optional] 
  **search** | **str**| 名前から部分一致検索 | [optional] 
@@ -338,7 +342,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_permission_list**
-> GetPermissionList200Response get_permission_list(category=category, code=code)
+> GetPermissionList200Response get_permission_list(page=page, per_page=per_page, category=category, code=code)
 
 権限の一覧を取得する
 
@@ -372,12 +376,14 @@ configuration = sakura_vps_client_py.Configuration(
 with sakura_vps_client_py.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = sakura_vps_client_py.ApiKeyApi(api_client)
+    page = 56 # int |  (optional)
+    per_page = 10 # int |  (optional) (default to 10)
     category = 'server' # str | カテゴリーで絞り込む (optional)
     code = 'get-server-list,get-server,put-server' # str | コードで絞り込む。カンマ区切りで複数指定可能。 (optional)
 
     try:
         # 権限の一覧を取得する
-        api_response = api_instance.get_permission_list(category=category, code=code)
+        api_response = api_instance.get_permission_list(page=page, per_page=per_page, category=category, code=code)
         print("The response of ApiKeyApi->get_permission_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -391,6 +397,8 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **page** | **int**|  | [optional] 
+ **per_page** | **int**|  | [optional] [default to 10]
  **category** | **str**| カテゴリーで絞り込む | [optional] 
  **code** | **str**| コードで絞り込む。カンマ区切りで複数指定可能。 | [optional] 
 
@@ -499,7 +507,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_role_list**
-> GetRoleList200Response get_role_list(order=order, search=search)
+> GetRoleList200Response get_role_list(page=page, per_page=per_page, order=order, search=search)
 
 ロール一覧を取得する
 
@@ -533,12 +541,14 @@ configuration = sakura_vps_client_py.Configuration(
 with sakura_vps_client_py.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = sakura_vps_client_py.ApiKeyApi(api_client)
+    page = 56 # int |  (optional)
+    per_page = 10 # int |  (optional) (default to 10)
     order = 'order_example' # str | データの並び順。項目名の頭に`-`をつけると降順で取得する   例: * 名称昇順: sort=name * 名称降順: sort=-name (optional)
     search = 'search_example' # str | 名前と説明文から部分一致検索 (optional)
 
     try:
         # ロール一覧を取得する
-        api_response = api_instance.get_role_list(order=order, search=search)
+        api_response = api_instance.get_role_list(page=page, per_page=per_page, order=order, search=search)
         print("The response of ApiKeyApi->get_role_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -552,6 +562,8 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **page** | **int**|  | [optional] 
+ **per_page** | **int**|  | [optional] [default to 10]
  **order** | **str**| データの並び順。項目名の頭に&#x60;-&#x60;をつけると降順で取得する   例: * 名称昇順: sort&#x3D;name * 名称降順: sort&#x3D;-name | [optional] 
  **search** | **str**| 名前と説明文から部分一致検索 | [optional] 
 

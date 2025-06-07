@@ -8,7 +8,7 @@ Method | HTTP request | Description
 
 
 # **get_zone_list**
-> GetZoneList200Response get_zone_list()
+> GetZoneList200Response get_zone_list(page=page, per_page=per_page)
 
 ゾーン情報一覧を取得する
 
@@ -42,10 +42,12 @@ configuration = sakura_vps_client_py.Configuration(
 with sakura_vps_client_py.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = sakura_vps_client_py.ZoneApi(api_client)
+    page = 56 # int |  (optional)
+    per_page = 10 # int |  (optional) (default to 10)
 
     try:
         # ゾーン情報一覧を取得する
-        api_response = api_instance.get_zone_list()
+        api_response = api_instance.get_zone_list(page=page, per_page=per_page)
         print("The response of ZoneApi->get_zone_list:\n")
         pprint(api_response)
     except Exception as e:
@@ -56,7 +58,11 @@ with sakura_vps_client_py.ApiClient(configuration) as api_client:
 
 ### Parameters
 
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **page** | **int**|  | [optional] 
+ **per_page** | **int**|  | [optional] [default to 10]
 
 ### Return type
 

@@ -38,6 +38,7 @@ docs/NfsServerInterface.md
 docs/NfsServerIpv4.md
 docs/NfsServerPowerStatus.md
 docs/NfsServerStorageInner.md
+docs/NfsStorageInfo.md
 docs/Pagination.md
 docs/Permission.md
 docs/PostNfsServerChangeIpv4Request.md
@@ -129,6 +130,7 @@ sakura_vps_client_py/models/nfs_server_interface.py
 sakura_vps_client_py/models/nfs_server_ipv4.py
 sakura_vps_client_py/models/nfs_server_power_status.py
 sakura_vps_client_py/models/nfs_server_storage_inner.py
+sakura_vps_client_py/models/nfs_storage_info.py
 sakura_vps_client_py/models/pagination.py
 sakura_vps_client_py/models/permission.py
 sakura_vps_client_py/models/post_nfs_server_change_ipv4_request.py

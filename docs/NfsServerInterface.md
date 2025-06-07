@@ -5,8 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **int** | id | [readonly] 
-**device** | **str** | NIC名称 | [readonly] 
 **connect_to** | **str** | インターフェースの接続先 | [readonly] 
 **mac** | **str** | MACアドレス | [readonly] 
 **switch_id** | **int** | スイッチID | 
