@@ -28,9 +28,9 @@ generate_models: spec/spec.json
 		--git-user-id g1eng \
 		-o .
 
-diff_spec:
-	[ -f spec/spec.json ] \
-		&& diff spec/spec.json spec/spec-tmp.json || exit 1
+diff_spec: spec/spec-tmp.json
+	[ -f spec/spec.json ] || cp -v spec/spec-tmp.json spec/spec.json
+	diff spec/spec.json spec/spec-tmp.json || exit 1
 
 download_spec:
 	[ -d spec ] || mkdir spec \
@@ -38,7 +38,7 @@ download_spec:
 
 
 spec/spec-tmp.json: 
-	./scripts/extract_spec_cc.sh spec/openapi-next.json spec/spec-tmp.json
+	./scripts/extract_spec_cc.sh spec/openapi.json spec/spec-tmp.json
 
 clean:
 	rm -rv *.py README.md api docs spec test pyproject.toml requirements.txt sakura-vps-client-py setup.* test-requirements.txt tox.ini
