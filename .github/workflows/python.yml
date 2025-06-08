@@ -5,7 +5,13 @@
 
 name: sakura_vps_client_py Python package
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:

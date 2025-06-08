@@ -1,19 +1,13 @@
 name: check code generation on push
 
 on:
-  workflow_run:
-    workflows: ["check upstream changes"]
-    branches:
-      - main
   push:
     branches:
+      - main
       - fix-gha
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
     steps:
       - uses: actions/checkout@v4
